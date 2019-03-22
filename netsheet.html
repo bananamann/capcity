@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Net Sheet Calculator</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="styles/netsheet.css"/>
+        <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+        <script type="text/javascript" src="scripts/netsheet.js"></script>
+    </head>
+    <body>
+        <div class="container" id="mainContainer">
+            <h1>Net Sheet Calculator</h1>
+            <hr/>
+            <h2>General Information</h2>
+            <br/>
+            <div class="section-container col-sm-12">
+                <div class="row form-row">
+                    <div class="col-sm-5">
+                        <label for="inputPreparedBy" class="control-label">Prepared By</label>
+                        <input class="form-control" id="inputPreparedBy" placeholder="Prepared By">
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-5">
+                        <label for="inputClosingDate" class="control-label">Closing Date</label>
+                        <input class="form-control" id="inputClosingDate" placeholder="MM/DD/YYYY">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-5">
+                        <label for="inputSellerName" class="control-label">Seller Name</label>
+                        <input class="form-control" id="inputSellerName" placeholder="Seller Name">
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-5">
+                        <label for="inputAnnualPropTax" class="control-label">Annual Property Taxes</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputAnnualPropTax">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-5">
+                        <label for="inputPropAddr" class="control-label">Property Address</label>
+                        <input class="form-control" id="inputPropAddr" placeholder="Property Address">
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-5">
+                        <label for="inputMonthlyPropTax" class="control-label">Monthly Property Taxes</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputMonthlyPropTax">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-5">
+                        <label for="inputCounty" class="control-label">County</label>
+                        <input class="form-control" id="inputCounty" placeholder="County">
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-5">
+                        <label for="inputTaxDays" class="control-label">Taxes Due at Closing for</label>
+                        <input class="form-control" id="inputTaxDays" placeholder="(# of days)">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-5">
+                        <label for="inputSalesPrice" class="control-label">Sale Price</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputSalesPrice">
+                        </div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-5">
+                        <label for="inputExistingPolicy" class="control-label">Existing Title Policy Amount</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputExistingPolicy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            <h2>Sales Details</h2>
+            <br/>
+            <div class="section-container col-sm-12">
+                <!-- <div class="row form-row">
+                    <div class="col-sm-5">
+                        <label for="inputSalesPrice" class="control-label">Sales Price</label>
+                        <input class="form-control" id="inputSalesPrice" placeholder="Sales Price">
+                    </div>
+                </div> -->
+
+                <div class="form-row">
+                    <div class="col-sm-5">
+                        <label for="inputLessMortFirst" class="control-label">Less Present First Mortgage Balance</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputLessMortFirst">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-5">
+                        <label for="inputLessMortSecond" class="control-label">Less Present Second Mortgage Balance</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputLessMortSecond">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            <h2>Property Taxes</h2>
+            <br/>
+            <div class="section-container col-sm-12">
+                <div class="row form-row">
+                    <div class="col-sm-5">
+                        <label for="inputTransferFees" class="control-label">Transfer Fees</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputTransferFees">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-5">
+                        <label for="inputTaxProration" class="control-label">Pro-rated Tax Amount</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputTaxProration">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            <h2>Title Insurance</h2>
+            <br/>
+            <div class="section-container col-sm-12">
+                <div class="row form-row">
+                    <div class="col-sm-5">
+                        <label for="inputOwnersPolicy" class="control-label">Owners Title Policy</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputOwnersPolicy">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-5">
+                        <label for="inputTitleReissue" class="control-label">Title Reissue Discount</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputTitleReissue">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            <h2>Commissions</h2>
+            <br/>
+            <div class="section-container col-sm-12">
+                <div class="form-row">
+                    <div class="col-sm-5">
+                        <label for="inputSaleCommPercent" class="control-label">Sale Commission Rate</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">%</span>
+                            </div>
+                            <input class="form-control" id="inputSaleCommPercent">
+                        </div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-5">
+                        <label for="inputListCommPercent" class="control-label">Listing Commission Rate</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">%</span>
+                            </div>
+                            <input class="form-control" id="inputListCommPercent">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-5">
+                        <label for="inputSaleCommTotal" class="control-label">Sale Commission Total</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputSaleCommTotal">
+                        </div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-5">
+                        <label for="inputListCommTotal" class="control-label">Listing Commission Total</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputListCommTotal">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            <h2>Transaction Fees</h2>
+            <br/>
+            <div class="section-container col-sm-12">
+                <div class="form-row">
+                    <div class="col-sm-5">
+                        <label for="inputClosingFee" class="control-label">Seller Closing Fee</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputClosingFee">
+                        </div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-5">
+                        <label for="inputDocFee" class="control-label">Document Prep (Deed)</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputDocFee">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-5">
+                        <label for="inputTitleBinderFee" class="control-label">Title Binder</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputTitleBinderFee">
+                        </div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-5">
+                        <label for="inputHandlingFee" class="control-label">Courier, Express Mail & Handling</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputHandlingFee">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-5">
+                        <label for="inputSearchFee" class="control-label">Search Fee</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputSearchFee">
+                        </div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-5">
+                        <label for="inputRecordingFee" class="control-label">Recording Service</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputRecordingFee">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            <h2>Other Fees</h2>
+            <br/>
+            <div class="section-container col-sm-12">
+                <div class="row form-row">
+                    <div class="col-sm-5">
+                        <label for="inputHomeWarranty" class="control-label">Home Warranty</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputHomeWarranty">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-5">
+                        <label for="inputGasWarranty" class="control-label">Gas Line Warranty</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputGasWarranty">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-5">
+                        <label for="inputAddlCosts" class="control-label">Additional Costs</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputAddlCosts">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr/>
+            <br/>
+            <h2>Total Expenses and Estimated Equity</h2>
+            <br/>
+            <div class="section-container col-sm-12">
+                <div class="row form-row">
+                    <div class="col-sm-5">
+                        <label for="inputTotalExpense" class="control-label">Total Selling Expenses</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputTotalExpense">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-5">
+                        <label for="inputSellerEquity" class="control-label">Estimated Equity to Seller</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control" id="inputSellerEquity">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+        </div>
+    </body>
+</html>

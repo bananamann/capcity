@@ -1,0 +1,18 @@
+#mainContainer {
+    width: 65%;
+}
+
+.form-row {
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.control-label {
+    font-weight: bold;
+    padding: 0;
+    /* margin-bottom: 1px; */
+}
+
+body {
+    line-height: 1;
+}
