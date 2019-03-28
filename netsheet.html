@@ -3,6 +3,7 @@
     <head>
         <title>Net Sheet Calculator</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="styles/netsheet.css"/>
         <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -346,7 +347,51 @@
                     </div>
                 </div>
 
+                <div class="form-row custom-fee-container">
+                    <div class="col-sm-5">
+                        <label class="control-label">Custom Fees</label>
+                        <div class="input-group">
+                            <input class="form-control fee-name col-sm-4" value="Custom Fee 1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control custom-fee">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row custom-fee-container">
+                    <div class="col-sm-5">
+                        <div class="input-group">
+                            <input class="form-control fee-name col-sm-4" value="Custom Fee 2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control custom-fee">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row custom-fee-container">
+                    <div class="col-sm-5">
+                        <div class="input-group">
+                            <input class="form-control fee-name col-sm-4" value="Custom Fee 3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input class="form-control custom-fee">
+                        </div>
+                    </div>
+                </div>
+
                 <br/>
+
+                <div class="btn btn-secondary" id="btnAddCustomFee">
+                    Add Custom Fee
+                </div>
+
+                <br/>
+                <hr/>
 
                 <div class="btn btn-primary" id="btnCalculate">
                     Calculate
@@ -354,7 +399,6 @@
 
             </div>
 
-            <hr/>
             <br/>
             <h2>Total Expenses and Estimated Equity</h2>
             <br/>

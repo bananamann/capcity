@@ -8,6 +8,21 @@ $(document).ready(function(){
        $('#inputSellerEquity').val(totalEquity.toFixed(2));
     });
 
+    $('#btnAddCustomFee').click(function() {
+        const customFeeCount = $('.custom-fee-container').length;
+        $('.custom-fee-container').last().after(`<div class="form-row custom-fee-container">
+                                                    <div class="col-sm-5">
+                                                        <div class="input-group">
+                                                            <input class="form-control fee-name col-sm-4" value="Custom Fee ${customFeeCount + 1}">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text" id="basic-addon1">$</span>
+                                                            </div>
+                                                            <input class="form-control custom-fee">
+                                                        </div>
+                                                    </div>
+                                                </div>`);
+    });
+
     $('#inputSalePrice').keyup(function() {
         updateCommissions();
     });
@@ -63,12 +78,24 @@ $(document).ready(function(){
         const homeWarrantyFee = $('#inputHomeWarranty').val() ? parseFloat($('#inputHomeWarranty').val()) : 0;
         const gasWarrantyFee = $('#inputGasWarranty').val() ? parseFloat($('#inputGasWarranty').val()) : 0;
         const additionalCosts = $('#inputAddlCosts').val() ? parseFloat($('#inputAddlCosts').val()) : 0;
+        const customFees = calculateCustomFees();
 
-        const otherFeeTotal = homeWarrantyFee + gasWarrantyFee + additionalCosts;
+        const otherFeeTotal = homeWarrantyFee + gasWarrantyFee + additionalCosts + customFees;
 
         const totalFees = mortgageTotal + transferFees + transactionFeeTotal + otherFeeTotal;
 
         return totalFees;
+    }
+
+    function calculateCustomFees() {
+        let customFeeTotal = 0;
+        $('.custom-fee').each(function() {
+            const fee = $(this).val() ? parseFloat($(this).val()) : 0;
+
+            customFeeTotal += fee;
+        });
+
+        return customFeeTotal;
     }
 
     function calculateCommissions() {
