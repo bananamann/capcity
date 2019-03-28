@@ -35,6 +35,18 @@ $(document).ready(function(){
         updateCommissions();
     });
 
+    $('#inputClosingDate').blur(function() {
+        const closingDate = new Date($(this).val());
+
+        if(closingDate > new Date()) {
+            const yearStart = new Date(`1/1/${closingDate.getFullYear()}`);
+            const daysFromYearStart = Math.ceil((closingDate - yearStart)/1000/60/60/24);
+            const prorationDays = (closingDate.getMonth() + 1) < 6 ? 180 + daysFromYearStart : daysFromYearStart - 1;
+
+            $('#inputTaxDays').val(prorationDays);
+        }
+    });
+
     function updateCommissions() {
         const salePrice = $('#inputSalePrice').val() ? parseFloat($('#inputSalePrice').val()) : 0;
         const saleRate = $('#inputSaleRate').val() ? parseFloat($('#inputSaleRate').val()) : 0;
@@ -48,14 +60,14 @@ $(document).ready(function(){
     }
 
     function calculateExpenses(saleTotal) {
-        const taxTotal = calculateTaxes(saleTotal);
+        const insuranceTotal = calculateInsurance(saleTotal);
         const feeTotal = calculateFees();
         const commissionTotal = calculateCommissions();
 
-        return taxTotal + feeTotal + commissionTotal;
+        return insuranceTotal + feeTotal + commissionTotal;
     }
 
-    function calculateTaxes(saleTotal) {
+    function calculateInsurance(saleTotal) {
         return 0;
     }
 
