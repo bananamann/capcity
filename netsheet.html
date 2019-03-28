@@ -4,6 +4,10 @@
         <title>Net Sheet Calculator</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="styles/netsheet.css"/>
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
         <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
         <script type="text/javascript" src="scripts/netsheet.js"></script>
     </head>
@@ -50,13 +54,6 @@
                     </div>
                     <div class="col-sm-1"></div>
                     <div class="col-sm-5">
-                        <label for="inputMonthlyPropTax" class="control-label">Monthly Property Taxes</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">$</span>
-                            </div>
-                            <input class="form-control" id="inputMonthlyPropTax">
-                        </div>
                     </div>
                 </div>
 
@@ -68,18 +65,18 @@
                     <div class="col-sm-1"></div>
                     <div class="col-sm-5">
                         <label for="inputTaxDays" class="control-label">Taxes Due at Closing for</label>
-                        <input class="form-control" id="inputTaxDays" placeholder="(# of days)">
+                        <input class="form-control" id="inputTaxDays" placeholder="(# of days)" disabled>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="col-sm-5">
-                        <label for="inputSalesPrice" class="control-label">Sale Price</label>
+                        <label for="inputSalePrice" class="control-label">Sale Price</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">$</span>
                             </div>
-                            <input class="form-control" id="inputSalesPrice">
+                            <input class="form-control" id="inputSalePrice">
                         </div>
                     </div>
                     <div class="col-sm-1"></div>
@@ -108,24 +105,24 @@
 
                 <div class="form-row">
                     <div class="col-sm-5">
-                        <label for="inputLessMortFirst" class="control-label">Less Present First Mortgage Balance</label>
+                        <label for="inputMortFirst" class="control-label">Less Present First Mortgage Balance</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">$</span>
                             </div>
-                            <input class="form-control" id="inputLessMortFirst">
+                            <input class="form-control" id="inputMortFirst">
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="col-sm-5">
-                        <label for="inputLessMortSecond" class="control-label">Less Present Second Mortgage Balance</label>
+                        <label for="inputMortSecond" class="control-label">Less Present Second Mortgage Balance</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">$</span>
                             </div>
-                            <input class="form-control" id="inputLessMortSecond">
+                            <input class="form-control" id="inputMortSecond">
                         </div>
                     </div>
                 </div>
@@ -154,7 +151,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">$</span>
                             </div>
-                            <input class="form-control" id="inputTaxProration">
+                            <input class="form-control" id="inputTaxProration" disabled>
                         </div>
                     </div>
                 </div>
@@ -166,7 +163,7 @@
             <div class="section-container col-sm-12">
                 <div class="row form-row">
                     <div class="col-sm-5">
-                        <label for="inputOwnersPolicy" class="control-label">Owners Title Policy</label>
+                        <label for="inputOwnersPolicy" class="control-label">Owners Title Policy Amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">$</span>
@@ -183,7 +180,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">$</span>
                             </div>
-                            <input class="form-control" id="inputTitleReissue">
+                            <input class="form-control" id="inputTitleReissue" disabled>
                         </div>
                     </div>
                 </div>
@@ -195,22 +192,22 @@
             <div class="section-container col-sm-12">
                 <div class="form-row">
                     <div class="col-sm-5">
-                        <label for="inputSaleCommPercent" class="control-label">Sale Commission Rate</label>
+                        <label for="inputSaleRate" class="control-label">Sale Commission Rate</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">%</span>
                             </div>
-                            <input class="form-control" id="inputSaleCommPercent">
+                            <input class="form-control" id="inputSaleRate">
                         </div>
                     </div>
                     <div class="col-sm-1"></div>
                     <div class="col-sm-5">
-                        <label for="inputListCommPercent" class="control-label">Listing Commission Rate</label>
+                        <label for="inputListRate" class="control-label">Listing Commission Rate</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">%</span>
                             </div>
-                            <input class="form-control" id="inputListCommPercent">
+                            <input class="form-control" id="inputListRate">
                         </div>
                     </div>
                 </div>
@@ -222,7 +219,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">$</span>
                             </div>
-                            <input class="form-control" id="inputSaleCommTotal">
+                            <input class="form-control" id="inputSaleCommTotal" disabled>
                         </div>
                     </div>
                     <div class="col-sm-1"></div>
@@ -232,7 +229,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">$</span>
                             </div>
-                            <input class="form-control" id="inputListCommTotal">
+                            <input class="form-control" id="inputListCommTotal" disabled>
                         </div>
                     </div>
                 </div>
@@ -249,7 +246,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">$</span>
                             </div>
-                            <input class="form-control" id="inputClosingFee">
+                            <input class="form-control" id="inputClosingFee" value="0">
                         </div>
                     </div>
                     <div class="col-sm-1"></div>
@@ -259,7 +256,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">$</span>
                             </div>
-                            <input class="form-control" id="inputDocFee">
+                            <input class="form-control" id="inputDocFee" value="75">
                         </div>
                     </div>
                 </div>
@@ -271,7 +268,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">$</span>
                             </div>
-                            <input class="form-control" id="inputTitleBinderFee">
+                            <input class="form-control" id="inputTitleBinderFee" value="50">
                         </div>
                     </div>
                     <div class="col-sm-1"></div>
@@ -281,7 +278,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">$</span>
                             </div>
-                            <input class="form-control" id="inputHandlingFee">
+                            <input class="form-control" id="inputHandlingFee" value="0">
                         </div>
                     </div>
                 </div>
@@ -293,7 +290,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">$</span>
                             </div>
-                            <input class="form-control" id="inputSearchFee">
+                            <input class="form-control" id="inputSearchFee" value="200">
                         </div>
                     </div>
                     <div class="col-sm-1"></div>
@@ -303,7 +300,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">$</span>
                             </div>
-                            <input class="form-control" id="inputRecordingFee">
+                            <input class="form-control" id="inputRecordingFee" value="0">
                         </div>
                     </div>
                 </div>
@@ -348,6 +345,13 @@
                         </div>
                     </div>
                 </div>
+
+                <br/>
+
+                <div class="btn btn-primary" id="btnCalculate">
+                    Calculate
+                </div>
+
             </div>
 
             <hr/>
@@ -357,12 +361,12 @@
             <div class="section-container col-sm-12">
                 <div class="row form-row">
                     <div class="col-sm-5">
-                        <label for="inputTotalExpense" class="control-label">Total Selling Expenses</label>
+                        <label for="inputTotalExpenses" class="control-label">Total Selling Expenses</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">$</span>
                             </div>
-                            <input class="form-control" id="inputTotalExpense">
+                            <input class="form-control" id="inputTotalExpenses" disabled>
                         </div>
                     </div>
                 </div>
@@ -374,9 +378,15 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">$</span>
                             </div>
-                            <input class="form-control" id="inputSellerEquity">
+                            <input class="form-control" id="inputSellerEquity" disabled>
                         </div>
                     </div>
+                </div>
+                
+                <br/>
+
+                <div class="btn btn-primary" id="btnExport">
+                    Export
                 </div>
             </div>
             <br/>
