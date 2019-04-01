@@ -1,13 +1,18 @@
 $(document).ready(function() {
     $('#btnExport').click(function() {
-        generateDocument();
+        const salePrice = parseFloat($('#inputSalePrice').val());
+        const totalTaxes = $('#inputTaxProration').val() ? parseFloat($('#inputTaxProration').val()) : 0;
+        const totalExpenses = calculateExpenses(salePrice, totalTaxes);
+        const totalEquity = salePrice - totalExpenses;
+
+        generateDocument(totalExpenses, totalEquity);
     });
 
     $('#btnCalculate').click(function() {
        const salePrice = parseFloat($('#inputSalePrice').val());
-       const totalExpenses = calculateExpenses(salePrice);
        const totalTaxes = $('#inputTaxProration').val() ? parseFloat($('#inputTaxProration').val()) : 0;
-       const totalEquity = salePrice - totalExpenses - totalTaxes;
+       const totalExpenses = calculateExpenses(salePrice, totalTaxes);
+       const totalEquity = salePrice - totalExpenses;
 
        $('#inputTotalExpenses').val(totalExpenses.toFixed(2));
        $('#inputSellerEquity').val(totalEquity.toFixed(2));
@@ -79,12 +84,12 @@ $(document).ready(function() {
         $('#inputListCommTotal').val(listCommTotal);
     }
 
-    function calculateExpenses(salePrice) {
+    function calculateExpenses(salePrice, taxes) {
         const insuranceTotal = calculateInsurance(salePrice);
         const feeTotal = calculateFees();
         const commissionTotal = calculateCommissions();
 
-        return (insuranceTotal + feeTotal + commissionTotal);
+        return (insuranceTotal + feeTotal + commissionTotal + taxes);
     }
 
     function calculateInsurance(salePrice) {
@@ -178,11 +183,11 @@ $(document).ready(function() {
         return commissionTotal;
     }
 
-    function generateDocument() {
+    function generateDocument(totalExpenses, totalEquity) {
         let doc = new jsPDF();
 
         generateHeaders(doc);
-        generateData(doc);
+        generateData(doc, totalExpenses, totalEquity);
         doc.output('dataurlnewwindow');
         // doc.save('netsheet.pdf');
     }
@@ -200,7 +205,7 @@ $(document).ready(function() {
         doc.text('Other Fees', 10, 176);
     }
 
-    function generateData(doc) {
+    function generateData(doc, totalExpenses, totalEquity) {
         doc.setFontSize(14);
 
         const salePrice = parseFloat($('#inputSalePrice').val());
@@ -225,7 +230,7 @@ $(document).ready(function() {
         doc.text('First Mortgage: $' + `${firstMortgage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`, 18, 108);
         doc.text('Second Mortage: $' + `${secondMortgage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`, 18, 114);
 
-        const ownersInsurance = parseFloat($('#inputOwnersPolicy').val()) ? parseFloat($('#inputOwnersPolicy').val()) : 0;
+        const ownersInsurance = parseFloat($('#inputOwnersPolicy').val()) ? parseFloat($('#inputOwnersPolicy').val()) : 200;
         const closingFee = parseFloat($('#inputClosingFee').val()) ? parseFloat($('#inputClosingFee').val()) : 0;
         const deedPrep = parseFloat($('#inputDocFee').val()) ? parseFloat($('#inputDocFee').val()) : 0;
         const binderFee = parseFloat($('#inputTitleBinderFee').val()) ? parseFloat($('#inputTitleBinderFee').val()) : 0;
@@ -251,6 +256,7 @@ $(document).ready(function() {
 
         let feeNames = [];
         let i = 0;
+        let yPos = 200;
 
         $('.fee-name').each(function() {
             const name = $(this).val();
@@ -261,8 +267,16 @@ $(document).ready(function() {
         $('.custom-fee').each(function() {
             const fee = $(this).val() ? parseFloat($(this).val()) : 0;
 
-            doc.text(`${feeNames[i]}: $` + `${fee}`, 18, 200 + i * 6);
+            doc.text(`${feeNames[i]}: $` + `${fee.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`, 18, yPos);
             i++;
+            yPos += 6;
         });
+
+        doc.line(6, yPos, 180, yPos);
+
+        doc.setFontSize(20);
+
+        doc.text('Total Selling Expenses: $' + `${totalExpenses.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`, 10, yPos + 10);
+        doc.text('Total Estimated Equity: $' + `${totalEquity.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`, 10, yPos + 20);
     }
 });
