@@ -2,7 +2,7 @@ $(document).ready(function(){
     $('#btnCalculate').click(function() {
        const saleTotal = parseFloat($('#inputSalePrice').val());
        const totalExpenses = calculateExpenses(saleTotal);
-       const totalEquity = saleTotal - totalExpenses;
+       const totalEquity = saleTotal - totalExpenses - totalTaxes;
 
        $('#inputTotalExpenses').val(totalExpenses.toFixed(2));
        $('#inputSellerEquity').val(totalEquity.toFixed(2));
@@ -36,16 +36,31 @@ $(document).ready(function(){
     });
 
     $('#inputClosingDate').blur(function() {
+        let prorationDays = 0;
         const closingDate = new Date($(this).val());
+        const annualTaxes = $('#inputAnnualTax').val() ? parseFloat($('#inputAnnualTax').val()) : 0;
 
         if(closingDate > new Date()) {
             const yearStart = new Date(`1/1/${closingDate.getFullYear()}`);
             const daysFromYearStart = Math.ceil((closingDate - yearStart)/1000/60/60/24);
-            const prorationDays = (closingDate.getMonth() + 1) < 6 ? 180 + daysFromYearStart : daysFromYearStart - 1;
+            prorationDays = (closingDate.getMonth() + 1) < 6 ? 180 + daysFromYearStart : daysFromYearStart - 1;
 
             $('#inputTaxDays').val(prorationDays);
         }
+
+        updateTaxes(annualTaxes, prorationDays);
     });
+
+    $('#inputAnnualTax').blur(function() {
+        const annualTaxes = $(this).val();
+        const prorationDays = $('#inputTaxDays').val() ? parseFloat($('#inputTaxDays').val()) : 0;
+
+        updateTaxes(annualTaxes, prorationDays);
+    });
+
+    function updateTaxes(annualTaxes, prorationDays) {
+        $('#inputTaxProration').val((annualTaxes * (prorationDays / 365)).toFixed(2));
+    }
 
     function updateCommissions() {
         const salePrice = $('#inputSalePrice').val() ? parseFloat($('#inputSalePrice').val()) : 0;
@@ -68,7 +83,11 @@ $(document).ready(function(){
     }
 
     function calculateInsurance(saleTotal) {
-        return 0;
+        const existingPolicyAmount = $('#inputExistingPolicy').val() ? parseFloat($('#inputExistingPolicy').val()) : 0;
+
+        
+
+        return ;
     }
 
     function calculateFees() {
