@@ -249,6 +249,20 @@ $(document).ready(function() {
         doc.text('Gas Line Warranty: $' + `${gasWarranty}`, 18, 188);
         doc.text('Additional Costs: $' + `${addlCosts}`, 18, 194);
 
-        
+        let feeNames = [];
+        let i = 0;
+
+        $('.fee-name').each(function() {
+            const name = $(this).val();
+
+            feeNames.push(name);
+        })
+
+        $('.custom-fee').each(function() {
+            const fee = $(this).val() ? parseFloat($(this).val()) : 0;
+
+            doc.text(`${feeNames[i]}: $` + `${fee}`, 18, 200 + i * 6);
+            i++;
+        });
     }
 });
