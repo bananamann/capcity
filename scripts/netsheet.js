@@ -1,8 +1,9 @@
 $(document).ready(function(){
     $('#btnCalculate').click(function() {
-       const saleTotal = parseFloat($('#inputSalePrice').val());
-       const totalExpenses = calculateExpenses(saleTotal);
-       const totalEquity = saleTotal - totalExpenses - totalTaxes;
+       const salePrice = parseFloat($('#inputSalePrice').val());
+       const totalExpenses = calculateExpenses(salePrice);
+       const totalTaxes = $('#inputTaxProration').val() ? parseFloat($('#inputTaxProration').val()) : 0;
+       const totalEquity = salePrice - totalExpenses - totalTaxes;
 
        $('#inputTotalExpenses').val(totalExpenses.toFixed(2));
        $('#inputSellerEquity').val(totalEquity.toFixed(2));
@@ -74,20 +75,55 @@ $(document).ready(function(){
         $('#inputListCommTotal').val(listCommTotal);
     }
 
-    function calculateExpenses(saleTotal) {
-        const insuranceTotal = calculateInsurance(saleTotal);
+    function calculateExpenses(salePrice) {
+        const insuranceTotal = calculateInsurance(salePrice);
         const feeTotal = calculateFees();
         const commissionTotal = calculateCommissions();
 
-        return insuranceTotal + feeTotal + commissionTotal;
+        return (insuranceTotal + feeTotal + commissionTotal);
     }
 
-    function calculateInsurance(saleTotal) {
-        const existingPolicyAmount = $('#inputExistingPolicy').val() ? parseFloat($('#inputExistingPolicy').val()) : 0;
+    function calculateInsurance(salePrice) {
+        const existingPolicyAmount = $('#inputExistingPolicyAmount').val() ? parseFloat($('#inputExistingPolicyAmount').val()) : 0;
+        const ownersPolicy = calculateOwnersPolicy(salePrice, existingPolicyAmount);
 
+        return ownersPolicy;
+    }
+
+    function calculateOwnersPolicy(salePrice, existingPolicyAmount) {
+        let i = 0;
+        let policyPremium = 0.00;
+        let remainingSale = Math.ceil(salePrice/1000);
         
+        const priceBrackets = [150, 100, 250, 9500, 1];
+        const premiums = [5.75, 4.5, 3.5, 2.75, 2.25];
+        
+        while (remainingSale > 0) {
+            let currentBracket = priceBrackets[i];
+            let currentPremium = premiums[i];
+            
+            if (remainingSale >= currentBracket) {
+                policyPremium += currentBracket * 1.15 * currentPremium;
+            } else {
+                policyPremium += remainingSale * 1.15 * currentPremium;
+            }
 
-        return ;
+            remainingSale = remainingSale - currentBracket;
+            i++;
+        }
+
+        const policyDiscount = existingPolicyAmount * 0.3;
+        policyPremium = policyPremium - policyDiscount;
+
+        $('#inputTitleDiscount').val(policyDiscount.toFixed(2));
+
+        if (policyPremium < 200) {
+            $('#inputOwnersPolicy').val(200.00);
+            return 200.00;
+        } else {
+            $('#inputOwnersPolicy').val(policyPremium.toFixed(2));
+            return policyPremium;
+        }
     }
 
     function calculateFees() {
@@ -138,9 +174,3 @@ $(document).ready(function(){
         return commissionTotal;
     }
 });
-
-
-// var doc = new jsPDF()
-
-// doc.text('Hello world!', 10, 10)
-// doc.save('a4.pdf')
