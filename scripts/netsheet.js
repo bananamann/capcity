@@ -1,4 +1,8 @@
-$(document).ready(function(){
+$(document).ready(function() {
+    $('#btnExport').click(function() {
+        generateDocument();
+    });
+
     $('#btnCalculate').click(function() {
        const salePrice = parseFloat($('#inputSalePrice').val());
        const totalExpenses = calculateExpenses(salePrice);
@@ -172,5 +176,79 @@ $(document).ready(function(){
         const commissionTotal = saleCommission + listCommission;
 
         return commissionTotal;
+    }
+
+    function generateDocument() {
+        let doc = new jsPDF();
+
+        generateHeaders(doc);
+        generateData(doc);
+        doc.output('dataurlnewwindow');
+        // doc.save('netsheet.pdf');
+    }
+
+    function generateHeaders(doc) {
+        doc.setFontSize(40)
+        doc.text('Seller Net Sheet', 10, 25);
+
+
+        doc.setFontSize(20);
+        doc.text('Property Details', 10, 45);
+        doc.text('Taxes', 10, 80);
+        doc.text('Existing Loans', 10, 102);
+        doc.text('Title Charges', 10, 124);
+        doc.text('Other Fees', 10, 176);
+    }
+
+    function generateData(doc) {
+        doc.setFontSize(14);
+
+        const salePrice = parseFloat($('#inputSalePrice').val());
+        const closingDate = $('#inputClosingDate').val();
+        const address = $('#inputAddr').val();
+        const county = $('#inputCounty').val();
+
+        doc.text('Sale Price: $' + `${salePrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`, 18, 52);
+        doc.text('Closing Date: ' + `${closingDate}`, 18, 58);
+        doc.text('Address: ' + `${address}`, 18, 64);
+        doc.text('County: ' + `${county}`, 18, 70);
+
+        const transferFees = parseFloat($('#inputTransferFees').val()) ? parseFloat($('#inputTransferFees').val()) : 0;
+        const propTaxes = parseFloat($('#inputTaxProration').val()) ? parseFloat($('#inputTaxProration').val()) : 0;
+
+        doc.text('Transfer Fees: $' + `${transferFees}`, 18, 86);
+        doc.text('Prorated Taxes: $' + `${propTaxes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`, 18, 92);
+
+        const firstMortgage = parseFloat($('#inputMortFirst').val()) ? parseFloat($('#inputMortFirst').val()) : 0;
+        const secondMortgage = parseFloat($('#inputMortSecond').val()) ? parseFloat($('#inputMortSecond').val()) : 0;
+
+        doc.text('First Mortgage: $' + `${firstMortgage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`, 18, 108);
+        doc.text('Second Mortage: $' + `${secondMortgage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`, 18, 114);
+
+        const ownersInsurance = parseFloat($('#inputOwnersPolicy').val()) ? parseFloat($('#inputOwnersPolicy').val()) : 0;
+        const closingFee = parseFloat($('#inputClosingFee').val()) ? parseFloat($('#inputClosingFee').val()) : 0;
+        const deedPrep = parseFloat($('#inputDocFee').val()) ? parseFloat($('#inputDocFee').val()) : 0;
+        const binderFee = parseFloat($('#inputTitleBinderFee').val()) ? parseFloat($('#inputTitleBinderFee').val()) : 0;
+        const courierFee = parseFloat($('#inputCourierFee').val()) ? parseFloat($('#inputCourierFee').val()) : 0;
+        const searchFee = parseFloat($('#inputSearchFee').val()) ? parseFloat($('#inputSearchFee').val()) : 0;
+        const recordingFee = parseFloat($('#inputRecordingFee').val()) ? parseFloat($('#inputRecordingFee').val()) : 0;
+
+        doc.text('Owner\'s Title Insurance: $' + `${ownersInsurance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`, 18, 130);
+        doc.text('Closing Fee: $' + `${closingFee}`, 18, 136);
+        doc.text('Deed Prep: $' + `${deedPrep}`, 18, 142);
+        doc.text('Binder Fee: $' + `${binderFee}`, 18, 148);
+        doc.text('Courier Fee: $' + `${courierFee}`, 18, 154);
+        doc.text('Search Fee: $' + `${searchFee}`, 18, 160);
+        doc.text('Recording Fee: $' + `${recordingFee}`, 18, 166);
+
+        const homeWarranty = parseFloat($('#inputTransferFees').val()) ? parseFloat($('#inputTransferFees').val()) : 0;
+        const gasWarranty = parseFloat($('#inputTransferFees').val()) ? parseFloat($('#inputTransferFees').val()) : 0;
+        const addlCosts = parseFloat($('#inputTransferFees').val()) ? parseFloat($('#inputTransferFees').val()) : 0;
+
+        doc.text('Home Warranty: $' + `${homeWarranty}`, 18, 182);
+        doc.text('Gas Line Warranty: $' + `${gasWarranty}`, 18, 188);
+        doc.text('Additional Costs: $' + `${addlCosts}`, 18, 194);
+
+        
     }
 });
