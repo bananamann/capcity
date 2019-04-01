@@ -202,7 +202,8 @@ $(document).ready(function() {
         doc.text('Taxes', 10, 80);
         doc.text('Existing Loans', 10, 102);
         doc.text('Title Charges', 10, 124);
-        doc.text('Other Fees', 10, 176);
+        doc.text('Commissions', 10, 176);
+        doc.text('Other Fees', 10, 198);
     }
 
     function generateData(doc, totalExpenses, totalEquity) {
@@ -246,17 +247,23 @@ $(document).ready(function() {
         doc.text('Search Fee: $' + `${searchFee}`, 18, 160);
         doc.text('Recording Fee: $' + `${recordingFee}`, 18, 166);
 
+        const saleCommission = $('#inputSaleCommTotal').val() ? parseFloat($('#inputSaleCommTotal').val()) : 0;
+        const listCommission = $('#inputListCommTotal').val() ? parseFloat($('#inputListCommTotal').val()) : 0;
+
+        doc.text('Sale Commission: $' + `${saleCommission}`, 18, 182);
+        doc.text('List Commission: $' + `${listCommission}`, 18, 188);
+
         const homeWarranty = parseFloat($('#inputTransferFees').val()) ? parseFloat($('#inputTransferFees').val()) : 0;
         const gasWarranty = parseFloat($('#inputTransferFees').val()) ? parseFloat($('#inputTransferFees').val()) : 0;
         const addlCosts = parseFloat($('#inputTransferFees').val()) ? parseFloat($('#inputTransferFees').val()) : 0;
 
-        doc.text('Home Warranty: $' + `${homeWarranty}`, 18, 182);
-        doc.text('Gas Line Warranty: $' + `${gasWarranty}`, 18, 188);
-        doc.text('Additional Costs: $' + `${addlCosts}`, 18, 194);
+        doc.text('Home Warranty: $' + `${homeWarranty}`, 18, 204);
+        doc.text('Gas Line Warranty: $' + `${gasWarranty}`, 18, 210);
+        doc.text('Additional Costs: $' + `${addlCosts}`, 18, 216);
 
         let feeNames = [];
         let i = 0;
-        let yPos = 200;
+        let yPos = 222;
 
         $('.fee-name').each(function() {
             const name = $(this).val();
