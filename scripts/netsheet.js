@@ -200,9 +200,24 @@ $(document).ready(function() {
     }
 
     function generateHeaders(doc) {
-        doc.setFontSize(40)
-        doc.text('Seller Net Sheet', 10, 25);
+        const preparedBy = $('#inputPreparedBy').val();
+        const companyName = $('#inputCompanyName').val();
+        const sellerName = $('#inputSellerName').val();
 
+        doc.setFontSize(36);
+        doc.text('Seller Net Sheet', 10, 23);
+
+        doc.setFontSize(12);
+        doc.text('Prepared By: ' + `${preparedBy || 'N/A'}` + ' | ' + `${companyName || 'N/A'}`, 12, 31);
+        doc.text('Seller: ' + `${sellerName || 'N/A'}`, 12, 37);
+
+        doc.text('Jim Sanderson', 150, 20);
+        doc.text('CapCity Title Agency', 150, 26);
+        doc.text('398 S. Washington Avenue', 150, 32);
+        doc.text('Columbus, OH 43215', 150, 38);
+        doc.text('(614) 222.6700', 150, 44);
+        doc.text('(614) 754.6325 (fax)', 150, 50);
+        doc.text('jsanderson@capcity.us', 150, 56);
 
         doc.setFontSize(20);
         doc.text('Property Details', 10, 45);
