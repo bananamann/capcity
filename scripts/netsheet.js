@@ -100,28 +100,10 @@ $(document).ready(function() {
     }
 
     function calculateOwnersPolicy(salePrice, existingPolicyAmount) {
-        let i = 0;
-        let policyPremium = 0.00;
-        let remainingSale = Math.ceil(salePrice/1000);
-        
-        const priceBrackets = [150, 100, 250, 9500, 1];
-        const premiums = [5.75, 4.5, 3.5, 2.75, 2.25];
-        
-        while (remainingSale > 0) {
-            let currentBracket = priceBrackets[i];
-            let currentPremium = premiums[i];
-            
-            if (remainingSale >= currentBracket) {
-                policyPremium += currentBracket * 1.15 * currentPremium;
-            } else {
-                policyPremium += remainingSale * 1.15 * currentPremium;
-            }
+        let policyPremium = calculatePolicyPremium(salePrice);
+        let existingPremium = calculatePolicyPremium(existingPolicyAmount);
 
-            remainingSale = remainingSale - currentBracket;
-            i++;
-        }
-
-        const policyDiscount = existingPolicyAmount * 0.3;
+        const policyDiscount = existingPremium * 0.3;
         policyPremium = policyPremium - policyDiscount;
 
         $('#inputTitleDiscount').val(policyDiscount.toFixed(2));
@@ -133,6 +115,31 @@ $(document).ready(function() {
             $('#inputOwnersPolicy').val(policyPremium.toFixed(2));
             return policyPremium;
         }
+    }
+
+    function calculatePolicyPremium(salePrice) {
+        let i = 0;
+        let policyPremium = 0.00;
+        let remainingAmount = Math.ceil(salePrice/1000);
+
+        const priceBrackets = [150, 100, 250, 9500, 1];
+        const premiums = [5.75, 4.5, 3.5, 2.75, 2.25];
+        
+        while (remainingAmount > 0) {
+            let currentBracket = priceBrackets[i];
+            let currentPremium = premiums[i];
+            
+            if (remainingAmount >= currentBracket) {
+                policyPremium += currentBracket * 1.15 * currentPremium;
+            } else {
+                policyPremium += remainingAmount * 1.15 * currentPremium;
+            }
+
+            remainingAmount = remainingAmount - currentBracket;
+            i++;
+        }
+
+        return policyPremium;
     }
 
     function calculateFees() {
@@ -189,7 +196,7 @@ $(document).ready(function() {
         generateHeaders(doc);
         generateData(doc, totalExpenses, totalEquity);
         doc.output('dataurlnewwindow');
-        // doc.save('netsheet.pdf');
+        doc.save('netsheet.pdf');
     }
 
     function generateHeaders(doc) {
